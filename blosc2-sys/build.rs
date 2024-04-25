@@ -24,6 +24,11 @@ fn main() {
             .define("BUILD_SHARED", "OFF")
             .define("BUILD_TESTS", "OFF")
             .define("BUILD_PLUGINS", "OFF")
+            .define("SHUFFLE_USE_AVX2", "OFF")
+            .define("SHUFFLE_USE_AVX512", "OFF")
+            .define("SHUFFLE_USE_NEON", "OFF")
+            .define("SHUFFLE_USE_SSE2", "OFF")
+            .define("SHUFFLE_USE_ALTIVEC", "OFF")
             .define("CMAKE_C_FLAGS", cmake_c_flags)
             .always_configure(true);
 
