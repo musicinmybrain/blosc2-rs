@@ -3,6 +3,10 @@ use std::path::Path;
 fn main() {
     println!("cargo::rerun-if-changed=build.rs");
 
+    let is_musl = std::env::var("CARGO_CFG_TARGET_ENV")
+        .map(|v| v == "musl")
+        .unwrap_or(false);
+
     // build blosc2 from source
     #[cfg(not(feature = "use-system-blosc2"))]
     {
@@ -27,7 +31,7 @@ fn main() {
             .define("CMAKE_C_FLAGS", cmake_c_flags)
             .always_configure(true);
 
-        if cfg!(feature = "static") {
+        if cfg!(feature = "static") || is_musl {
             cmake_conf.define("BUILD_STATIC", "ON");
         }
         if cfg!(feature = "shared") {
@@ -42,7 +46,7 @@ fn main() {
         }
 
         // Solves undefined reference to __cpu_model when using __builtin_cpu_supports() in shuffle.c
-        if let Ok(true) = std::env::var("CARGO_CFG_TARGET_ENV").map(|v| v == "musl") {
+        if is_musl {
             // TODO: maybe not always libgcc? I'm not sure.
             println!("cargo:rustc-link-lib=gcc");
         }
@@ -81,11 +85,13 @@ fn main() {
         }
     }
 
-    #[cfg(feature = "static")]
-    println!("cargo:rustc-link-lib=static=blosc2");
+    if cfg!(feature = "static") || is_musl {
+        println!("cargo:rustc-link-lib=static=blosc2");
+    }
 
-    #[cfg(feature = "shared")]
-    println!("cargo:rustc-link-lib=blosc2");
+    if cfg!(feature = "shared") {
+        println!("cargo:rustc-link-lib=blosc2");
+    }
 
     #[cfg(feature = "regenerate-bindings")]
     {
