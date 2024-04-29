@@ -107,13 +107,17 @@ jobs:
 
       - name: Set Environment Variables
         if: runner.os == 'macOS'
-        run: echo "MACOSX_DEPLOYMENT_TARGET=$(sw_vers -productVersion)" >> $GITHUB_ENV
+        run: |
+          echo "MACOSX_DEPLOYMENT_TARGET=$(sw_vers -productVersion)" >> $GITHUB_ENV
+          brew install gcc
 
       # Known issue where testing w/ shared linked lib doesn't work with --doc testing
       - name: Test (shared)
         run: cargo test --features shared --lib
 
       - name: Test (static)
+        env:
+          CC: gcc
         # mac fails w/ missing symbol __cpu_model, not sure yet
         # windows fails on the --doc portion of tests
         # if: matrix.os != 'macos-13' && matrix.os != 'windows-latest'
