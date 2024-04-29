@@ -22,7 +22,6 @@ fn main() {
         let cmake_c_flags = std::env::var("CFLAGS").unwrap_or("".to_string());
         let mut cmake_conf = cmake::Config::new(src_dir);
         cmake_conf
-            .define("CMAKE_POSITION_INDEPENDENT_CODE", "ON")
             .define("BUILD_SHARED_LIBS", "ON")
             .define("BUILD_FUZZERS", "OFF")
             .define("BUILD_BENCHMARKS", "OFF")
