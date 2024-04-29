@@ -48,6 +48,8 @@ fn main() {
                 .define("BLOSC_INSTALL", "ON");
         }
 
+        println!("cargo:rustc-link-lib=gcc");
+
         // Solves undefined reference to __cpu_model when using __builtin_cpu_supports() in shuffle.c
         if let Ok(true) = std::env::var("CARGO_CFG_TARGET_ENV").map(|v| v == "musl") {
             // TODO: maybe not always libgcc? I'm not sure.
