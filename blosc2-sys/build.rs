@@ -3,8 +3,8 @@ use std::path::{Path, PathBuf};
 fn main() {
     println!("cargo::rerun-if-changed=build.rs");
 
-    // build blosc2 from source
-    #[cfg(not(feature = "use-system-blosc2"))]
+    // downstream patch: never try to build blosc2 from source
+    #[cfg(any())]
     {
         let out_dir_str = std::env::var("OUT_DIR").unwrap();
         let out_dir = Path::new(&out_dir_str);
@@ -64,8 +64,7 @@ fn main() {
         }
     }
 
-    // Use system blosc2
-    #[cfg(feature = "use-system-blosc2")]
+    // downstream patch: never try to build blosc2 from source
     {
         match std::env::var("BLOSC2_INSTALL_PREFIX") {
             Ok(prefix) => {
