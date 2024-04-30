@@ -118,6 +118,7 @@ jobs:
       - name: Test (static)
         env:
           CC: cc
+          CFLAGS: -fPIC -fPIE
         # mac fails w/ missing symbol __cpu_model, not sure yet
         # windows fails on the --doc portion of tests
         # if: matrix.os != 'macos-13' && matrix.os != 'windows-latest'
