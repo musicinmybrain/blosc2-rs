@@ -27,5 +27,10 @@ pub extern "C" fn __builtin_cpu_supports(n: *const c_char) -> bool {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn blosc_get_cpu_features() -> isize {
+    return 0;
+}
+
 #[cfg(feature = "regenerate-bindings")]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
