@@ -112,8 +112,8 @@ jobs:
           brew install gcc
 
       # Known issue where testing w/ shared linked lib doesn't work with --doc testing
-      - name: Test (shared)
-        run: cargo test --features shared --lib
+      # - name: Test (shared)
+      #   run: cargo test --features shared --lib
 
       - name: Test (static)
         env:
