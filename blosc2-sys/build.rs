@@ -46,7 +46,6 @@ fn main() {
                 .define("CMAKE_INSTALL_PREFIX", install_prefix)
                 .define("BLOSC_INSTALL", "ON");
         }
-        println!("cargo:rustc-link-lib=gcc");
 
         // Solves undefined reference to __cpu_model when using __builtin_cpu_supports() in shuffle.c
         if let Ok(true) = std::env::var("CARGO_CFG_TARGET_ENV").map(|v| v == "musl") {
@@ -58,7 +57,7 @@ fn main() {
 
         for subdir in &["lib64", "lib", "bin"] {
             let search_path = install_path.join(subdir);
-            println!("cargo::rustc-link-search={}", search_path.display());
+            println!("cargo:rustc-link-search={}", search_path.display());
         }
     }
 
@@ -70,7 +69,7 @@ fn main() {
                 let install_path = Path::new(&prefix);
                 for subdir in &["lib64", "lib", "bin"] {
                     let search_path = install_path.join(subdir);
-                    println!("cargo::rustc-link-search={}", search_path.display());
+                    println!("cargo:rustc-link-search={}", search_path.display());
                 }
             }
 
