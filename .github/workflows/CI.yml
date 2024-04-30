@@ -107,7 +107,7 @@ jobs:
 
       - name: Set up Homebrew
         if: matrix.os == 'macos-13'
-        uses: Homebrew/actions/setup-homebrew@v2
+        uses: Homebrew/actions/setup-homebrew@master
 
       - name: Install Clang 16
         if: matrix.os == 'macos-13'
