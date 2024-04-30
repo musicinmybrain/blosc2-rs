@@ -115,7 +115,7 @@ jobs:
 
       - name: Verify Clang 16 installation
         if: matrix.os == 'macos-13'
-        run: llvm-config --version
+        run: clang -v
 
       - name: Set Environment Variables
         if: runner.os == 'macOS'
