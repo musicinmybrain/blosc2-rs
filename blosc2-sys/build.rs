@@ -52,7 +52,6 @@ fn main() {
             // TODO: maybe not always libgcc? I'm not sure.
             println!("cargo:rustc-link-lib=gcc");
         }
-        println!("cargo:rustc-link-lib=gcc");
 
         cmake_conf.build();
 
