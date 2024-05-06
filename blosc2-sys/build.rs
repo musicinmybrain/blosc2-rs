@@ -102,7 +102,7 @@ fn main() {
     #[cfg(feature = "shared")]
     println!("cargo:rustc-link-lib=blosc2");
 
-    #[cfg(feature = "regenerate-bindings")]
+    // downstream patch: always regenerate bindings
     {
         let out = PathBuf::from(&(format!("{}/bindings.rs", std::env::var("OUT_DIR").unwrap())));
         bindgen::Builder::default()
